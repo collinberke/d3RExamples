@@ -1,0 +1,26 @@
+# in example-bar-r.qmd
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(r2d3)
+```
+
+```{r}
+#| label: create-data
+data_bar_example <-
+  sort(
+    round(runif(10, max = 50)),
+    decreasing = TRUE
+  )
+```
+
+```{r}
+#| label: vis-bar-data
+r2d3(
+  data = data_bar_example,
+  script = "example-bar-r.js",
+  css = "style-bar.css",
+  elementId = "example-bar"
+)
+```
