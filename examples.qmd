@@ -1,0 +1,32 @@
+```{r}
+#| label: setup
+library(tidyverse)
+```
+
+# Scatterplot
+
+```{r}
+#| label: data-example-scatterplot
+set.seed(20260708)
+data_scatterplot <- tibble(
+  x = runif(10, min = 0, max = 500),
+  y = runif(10, min = 0, max = 500)
+)
+```
+
+```{r}
+#| label: json-lite
+# The defaults
+data <- jsonlite::toJSON(
+  data_scatterplot,
+  dataframe = "values"
+)
+```
+
+```{r}
+#| label: vis-example-scatterplot
+plot_d3_scatterplot(
+  data_scatterplot,
+  elementId = "example-scatter"
+)
+```
