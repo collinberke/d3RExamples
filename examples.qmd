@@ -7,10 +7,10 @@ library(tidyverse)
 
 ```{r}
 #| label: data-example-scatterplot
-set.seed(20260708)
+set.seed(20250709)
 data_scatterplot <- tibble(
-  x = runif(10, min = 0, max = 500),
-  y = runif(10, min = 0, max = 500)
+  x = round(runif(50, min = 0, max = 500)),
+  y = round(runif(50, min = 0, max = 500))
 )
 ```
 

@@ -8,21 +8,56 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
-        var dataset = [
-          [24.7407 , 40.013  ],
-          [316.3764, 234.9726],
-          [185.4722, 224.4867],
-          [282.9775, 399.2485],
-          [230.906 , 52.3965 ],
-          [464.6347, 314.2303],
-          [430.62  , 119.9725],
-          [247.8598, 14.1642 ],
-          [261.4066, 353.1354],
-          [275.8762, 333.8036]
-        ];
-        console.log(x)
-        console.log(x.dataset)
-        console.log(dataset)
+        h = 500
+        w = 500
+        var padding = 10;
+
+        var svg = d3.select(el)
+                    .append("svg")
+                    .attr("width", w)
+                    .attr("height", h);
+
+        var xScale = d3.scaleLinear()
+                      .domain([0, d3.max(x.dataset, function(d) { return d[0]; })])
+                      .range([0, w - padding * 2]);
+
+        var yScale = d3.scaleLinear()
+                       .domain([0, d3.max(x.dataset, function(d) { return d[1]; })])
+                       .range([h - padding, padding]);
+
+        svg.selectAll("circle")
+           .data(x.dataset)
+           .enter()
+           .append("circle")
+           .attr("cx", function(d) {
+             return xScale(d[0]);
+           })
+           .attr("cy", function(d) {
+             return yScale(d[1]);
+           })
+           .attr("r", function(d){
+             return Math.sqrt(h - d[1])
+           })
+           .attr("fill", "rgba(230, 160, 100, .7)")
+           .attr("stroke", "gray")
+           .attr("stroke-width", "2");
+
+        svg.selectAll("text")
+           .data(x.dataset)
+           .enter()
+           .append("text")
+           .text(function(d) {
+             return d[0] + "," + d[1];
+           })
+           .attr("x", function(d) {
+             return xScale(d[0]);
+           })
+           .attr("y", function(d) {
+             return yScale(d[1]);
+           })
+           .attr("font-family", "sans-serif")
+           .attr("font-size", "10px")
+           .attr("fill", "rgb(100, 160, 230)");
       },
       
       resize: function(width, height) {
